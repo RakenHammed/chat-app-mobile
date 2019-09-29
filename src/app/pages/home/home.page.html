@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let user of users">
+    <ion-card>
+      <ion-item nutton="true" lines="none" (click)="openConversation(user)">
+        <ion-thumbnail slot="start">
+          <img src="https://gravatar.com/avatar/f514851702c3acdaa42fee9041cd23bd?s=400&d=mp&r=x">
+        </ion-thumbnail>
+        <ion-label> {{user.firstName}} {{user.lastName}} </ion-label>
+        <ion-icon slot="end" name="paper-plane"></ion-icon>
+      </ion-item>
+    </ion-card>
+  </div>
+</ion-content>
