@@ -1,5 +1,7 @@
 {
   "name": "chat-front",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
