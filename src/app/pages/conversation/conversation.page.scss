@@ -1,0 +1,122 @@
+ion-content {
+    .scroll-content {
+        background-color: #f5f5f5;
+    }
+}
+
+ion-footer {
+
+    .send-button {
+        position: relative;
+        --padding-end: 0;
+        --padding-start: 0;
+        --background-activated: rgba(0, 0, 0, 0);
+        --background-focused: rgba(0, 0, 0, 0);
+        --background-hover: rgba(0, 0, 0, 0);
+    }
+
+    ion-icon {
+        color: var(--ion-color-custom);
+    }
+
+}
+
+.message-wrap {
+    padding: 0 10px;
+
+    .message {
+        min-height: 100%;
+        position: relative;
+        padding: 7px 0;
+
+        .msg-detail {
+            width: 100%;
+            display: inline-block;
+
+            p {
+                margin: 0;
+            }
+
+            .msg-info {
+                p {
+                    text-transform: capitalize;
+                    font-size: .8em;
+                    color: #888;
+                }
+            }
+
+            .msg-content {
+                white-space: pre-wrap;
+                position: relative;
+                float: left;
+                margin-top: 2px;
+                border-radius: 10px;
+                padding: 10px;
+                border: 2px solid #ddd;
+                width: auto;
+                max-width: 70%;
+                background-color: #fff;
+
+            }
+        }
+
+        .msg-status {
+            text-transform: capitalize;
+            font-size: .8em;
+            font-weight: bold;
+            color: #888;
+            padding-left: 1%;
+
+            ion-icon {
+                position: relative;
+                top: 3px;
+                font-size: 15px;
+            }
+        }
+    }
+
+    .message.right {
+        min-height: 100%;
+        position: relative;
+        padding: 7px 0;
+
+        .msg-detail {
+            width: 100%;
+            display: inline-block;
+
+            .msg-info {
+                p {
+                    text-align: right;
+                    text-transform: capitalize;
+                    font-size: .8em;
+                    color: #888;
+                }
+
+            }
+
+            .msg-content {
+                white-space: pre-wrap;
+                color: white;
+                background-color: var(--ion-color-custom);
+                float: right;
+                position: relative;
+                margin-top: 2px;
+                border-radius: 10px;
+                padding: 10px;
+                width: auto;
+                max-width: 70%;
+            }
+        }
+
+        .msg-status {
+            text-align: right;
+            text-transform: capitalize;
+            font-size: .8em;
+            font-weight: bold;
+            color: #888;
+            padding-right: 1%;
+        }
+
+    }
+
+}

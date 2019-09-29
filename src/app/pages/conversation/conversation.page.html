@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>conversation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content #content id="content" class="ion-padding">
+  <div class="message-wrap">
+
+    <div *ngFor="let message of messages" class="message" [class.right]=" message.userIsSender === true">
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p> {{message.senderFullName}}</p>
+        </div>
+        <div class="msg-content">
+          <p>{{message.message}}</p>
+        </div>
+      </div>
+      <div *ngIf="message.userIsSender" class="msg-status">
+        <div *ngIf="message.status === 'pending';else sent">
+          pending
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </div>
+        <ng-template #sent>
+          <div *ngIf="message.status === 'sent';else seen">
+            sent
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+        </ng-template>
+        <ng-template #seen>
+          <div *ngIf="message.status === 'seen'">
+            seen
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div id="bottom"></div>
+</ion-content>
+<ion-footer>
+  <ion-item lines="none">
+    <ion-textarea #chatInput maxlength="140" [(ngModel)]="editorMsg" (focusin)="onFocus()" clearInput=true>
+    </ion-textarea>
+    <ion-button class="send-button" size="large" fill="clear" (click)='sendMessage()' slot="end">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>
