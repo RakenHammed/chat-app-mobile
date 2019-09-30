@@ -6,18 +6,6 @@
     </ion-card-header>
     <ion-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <!-- <ion-item>
-          <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required formControlName="email" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required formControlName="password" type="text"></ion-input>
-        </ion-item>
-        <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
-          Login
-        </ion-button>
-       -->
         <ion-list>
           <ion-item>
             <ion-label position="stacked">Email</ion-label>
@@ -30,7 +18,6 @@
         </ion-list>
       </form>
     </ion-card-content>
-
   </ion-card>
   <div class="sign-up ion-text-center">
     Don't have an account?
