@@ -3,6 +3,7 @@ import { ConversationMessagesService } from 'src/app/services/conversation-messa
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Message } from 'src/app/models/message';
+import { SocketProvider } from 'src/app/services/socket-provider';
 
 @Component({
   selector: 'app-conversation',
@@ -20,10 +21,32 @@ export class ConversationPage implements OnInit {
   constructor(
     private conversationMessagesService: ConversationMessagesService,
     private activatedRoute: ActivatedRoute,
-  ) { }
+    private socket: SocketProvider,
+  ) {
+    this.listenToSocketUpdateMessageStatusEvent();
+    this.listenToSocketUpdateListMessagesEvent();
+  }
 
   ngOnInit() {
-    this.getConversationMessages();
+    this.socket.connect();
+    this.socket.on('connect', () => {
+      this.getConversationMessages();
+      this.socket.emit('conversationRoomNumber', this.conversationId);
+    });
+  }
+
+  listenToSocketUpdateListMessagesEvent() {
+    this.socket.on('new-message', () => {
+      this.getConversationMessages();
+      this.scrollToBottom();
+    });
+  }
+
+  listenToSocketUpdateMessageStatusEvent() {
+    this.socket.on('seen', (messageId) => {
+      console.log({ messageId });
+      this.messages.find(message => message._id === messageId).status = 'seen';
+    });
   }
 
   getConversationMessages() {
@@ -34,7 +57,6 @@ export class ConversationPage implements OnInit {
     if (user) {
       const participants: string[] = [receiver._id, user.id];
       this.conversationMessagesService.getConversationMessages(participants).subscribe(res => {
-        console.log(res);
         if (typeof res === 'string') {
           this.conversationId = res;
         } else {
@@ -43,7 +65,6 @@ export class ConversationPage implements OnInit {
           this.messages = this.messages.map(message => {
             return this.filterMessageAndUpdateStatus(message, user);
           });
-          console.log(this.messages);
           this.scrollToBottom();
         }
       });
@@ -56,10 +77,10 @@ export class ConversationPage implements OnInit {
       message.userIsSender = true;
     }
     if (!message.isRead && !message.userIsSender) {
-      // this.purchaseMessageProvider.updateMessageStatusToRead(purchaseMessage.purchaseId, purchaseMessage.id)
-      //   .subscribe(() => {
-      //     this.socket.emit('update-message-status', purchaseMessage.id);
-      //   });
+      this.conversationMessagesService.updateMessageStatusToRead(message._id, this.receiverId)
+        .subscribe(() => {
+          this.socket.emit('update-message-status', message._id);
+        });
     }
     if (message.userIsSender) {
       if (message.isRead) {
@@ -72,7 +93,6 @@ export class ConversationPage implements OnInit {
   }
 
   sendMessage() {
-    console.log(this.conversationId);
     if (!this.editorMsg.trim()) { return; }
     const message: Message = {
       message: this.editorMsg,
@@ -91,7 +111,7 @@ export class ConversationPage implements OnInit {
             element.status = 'sent';
           }
         });
-        // this.socket.emit('update-messages-list');
+        this.socket.emit('update-messages-list');
       },
       // err => this.purchaseMessageProvider.storeRequest(message),
     );

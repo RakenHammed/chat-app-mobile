@@ -11,6 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: '', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +25,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     StatusBar,

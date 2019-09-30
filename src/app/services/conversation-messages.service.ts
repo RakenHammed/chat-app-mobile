@@ -26,4 +26,12 @@ export class ConversationMessagesService {
     return this.http.post<any>(`${this.urlService.url}/api/v1/messages/addMessage`, params);
   }
 
+  updateMessageStatusToRead(messageId: string, receiverId: string) {
+    return this.http.put<any>(
+      `${this.urlService.url}/api/v1/messages/updateMessageStatusToRead/${messageId}/${receiverId}`,
+      {},
+    );
+
+  }
+
 }
