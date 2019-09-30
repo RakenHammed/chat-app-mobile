@@ -15,6 +15,7 @@ const routes: Routes = [
     loadChildren: './pages/conversation/conversation.module#ConversationPageModule',
     canActivate: [AuthenticationGuard],
   },
+  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
 ];
 
 @NgModule({

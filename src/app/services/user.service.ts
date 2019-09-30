@@ -23,6 +23,15 @@ export class UserService {
     return this.http.post(`${this.urlService.url}/api/v1/users/login`, params);
   }
 
+  signup(params: {
+    email: string,
+    password: string,
+    lastName: string,
+    firstName: string,
+  }): Observable<any> {
+    return this.http.post(`${this.urlService.url}/api/v1/users/signup`, params);
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.urlService.url}/api/v1/users/`);
   }
