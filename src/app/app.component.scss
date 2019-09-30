@@ -1,0 +1,22 @@
+ion-header {
+    background: var(--ion-color-primary);
+}
+
+ion-thumbnail {
+    --border-radius: 50px;
+    --size: 64px;
+    position: relative;
+    top: 5%;
+    left: 5%;
+}
+
+.full-name {
+    color: white;
+    text-transform: capitalize;
+}
+
+.email {
+    color: white;
+    font-size: 70%;
+    padding-left: 5px;
+}

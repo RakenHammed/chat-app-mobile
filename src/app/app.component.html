@@ -1,3 +1,28 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="content">
+    <ion-header>
+      <ion-thumbnail slot="start">
+        <img src="https://gravatar.com/avatar/f514851702c3acdaa42fee9041cd23bd?s=400&d=mp&r=x">
+      </ion-thumbnail>
+      <ion-title>
+        <p *ngIf="user">
+          <span class="full-name">{{user.firstName}} {{user.lastName}}</span>
+          <br /> <span class="email">{{user.email}}</span>
+        </p>
+      </ion-title>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="none">
+        <ion-item [routerLink]="['/profile']" routerDirection="forward" (click)="closeMenu()">
+          <ion-icon name="person" slot="start"></ion-icon>
+          &nbsp;Profile
+        </ion-item>
+        <ion-item [routerLink]="['/login']" routerDirection="root" (click)="closeMenu(); disconnect()">
+          <ion-icon name="power" slot="start"></ion-icon>
+          &nbsp;Disconnect
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content" main></ion-router-outlet>
 </ion-app>

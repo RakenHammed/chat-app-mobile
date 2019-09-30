@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,8 @@ export class LoginPage {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private events: Events,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [
@@ -38,6 +39,7 @@ export class LoginPage {
       async res => {
         localStorage.setItem('chatToken', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
+        this.events.publish('user:logged', res.user);
         this.router.navigate(['home'], { replaceUrl: true });
         const toast = await this.toastController.create({
           color: 'success',
