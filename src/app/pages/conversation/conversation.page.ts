@@ -44,7 +44,6 @@ export class ConversationPage implements OnInit {
 
   listenToSocketUpdateMessageStatusEvent() {
     this.socket.on('seen', (messageId) => {
-      console.log({ messageId });
       this.messages.find(message => message._id === messageId).status = 'seen';
     });
   }
@@ -104,7 +103,7 @@ export class ConversationPage implements OnInit {
       createdAt: new Date(),
     };
     this.editorMsg = '';
-    this.focus();
+    this.onFocus();
     this.pushNewMessage(message);
     this.conversationMessagesService.sendMessage(message).subscribe(
       res => {
@@ -125,7 +124,7 @@ export class ConversationPage implements OnInit {
     this.scrollToBottom();
   }
 
-  focus() {
+  onFocus() {
     if (this.messageInput && this.messageInput.nativeElement) {
       this.messageInput.nativeElement.focus();
     }

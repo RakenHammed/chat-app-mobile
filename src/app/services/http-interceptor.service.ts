@@ -11,7 +11,6 @@ export class HttpInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('chatToken');
-    console.log(token);
     if (token) {
       request = request.clone({
         setHeaders: {
