@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ConversationMessagesService } from 'src/app/services/conversation-messages.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
@@ -10,7 +10,7 @@ import { SocketProvider } from 'src/app/services/socket-provider';
   templateUrl: './conversation.page.html',
   styleUrls: ['./conversation.page.scss'],
 })
-export class ConversationPage implements OnInit {
+export class ConversationPage implements OnInit, OnDestroy {
   @ViewChild('content', { static: true }) private content: any;
   @ViewChild('chatInput', { static: true }) messageInput: ElementRef;
   messages: Message[];
@@ -136,6 +136,11 @@ export class ConversationPage implements OnInit {
         this.content.scrollToBottom();
       }
     }, 200);
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
+    this.socket.removeAllListeners();
   }
 
 }
