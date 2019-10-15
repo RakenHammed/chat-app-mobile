@@ -76,19 +76,21 @@ export class ConversationPage implements OnInit {
     if (message.sender._id === user.id) {
       message.userIsSender = true;
     }
-    if (!message.isRead && !message.userIsSender) {
-      this.conversationMessagesService.updateMessageStatusToRead(message._id, this.receiverId)
-        .subscribe(() => {
-          this.socket.emit('update-message-status', message._id);
-        });
-    }
-    if (message.userIsSender) {
-      if (message.isRead) {
-        message.status = 'seen';
-      } else {
-        message.status = 'sent';
+    message.receivers.forEach(receiver => {
+      if (!receiver.isRead && !message.userIsSender) {
+        this.conversationMessagesService.updateMessageStatusToRead(message._id, receiver.receiverId)
+          .subscribe(() => {
+            this.socket.emit('update-message-status', message._id);
+          });
       }
-    }
+      if (message.userIsSender) {
+        if (receiver.isRead) {
+          message.status = 'seen';
+        } else {
+          message.status = 'sent';
+        }
+      }
+    });
     return message;
   }
 

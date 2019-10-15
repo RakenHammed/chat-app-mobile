@@ -7,6 +7,10 @@ export class Message {
   sender?: User;
   senderFullName?: string;
   receiversIds?: string[];
+  receivers?: Array<{
+    receiverId: string,
+    isRead: boolean,
+  }>;
   message?: string;
   userIsSender?: boolean;
   isRead?: boolean;
