@@ -14,10 +14,9 @@ ion-card {
 
 ion-button {
     width: 70%;
-    height: 6%;
-    position: absolute;
-    bottom: 14.5%;
-    left: 15%;
+    position: relative;
+    bottom: 25.5%;
+    left: 13.5%;
     --background: var(--ion-color-primary);
     --background-activated: var(--ion-color-primary);
     --background-focused: var(--ion-color-primary);

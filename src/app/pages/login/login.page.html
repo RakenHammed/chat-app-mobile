@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content scrollX="true">
   <div class="header"></div>
   <ion-card>
     <ion-card-header>
@@ -21,7 +21,7 @@
   </ion-card>
   <div class="sign-up ion-text-center">
     Don't have an account?
-    <a class="link" href="" [routerLink]="['/signup']">
+    <a class="link" href="" [routerLink]="['/signup']" routerDirection="forward">
       Register
     </a>
   </div>
