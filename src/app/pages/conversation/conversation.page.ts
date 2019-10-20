@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Message } from 'src/app/models/message';
 import { SocketProvider } from 'src/app/services/socket-provider';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-conversation',
@@ -22,14 +23,22 @@ export class ConversationPage implements OnInit, OnDestroy {
     private conversationMessagesService: ConversationMessagesService,
     private activatedRoute: ActivatedRoute,
     private socket: SocketProvider,
+    public loadingController: LoadingController,
   ) {
     this.listenToSocketUpdateMessageStatusEvent();
     this.listenToSocketUpdateListMessagesEvent();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      cssClass: 'custom-loader-class',
+      showBackdrop: false,
+    });
+    await loading.present();
     this.socket.connect();
-    this.socket.on('connect', () => {
+    await this.loadingController.dismiss();
+    this.socket.on('connect',() => {
       this.getConversationMessages();
       this.socket.emit('conversationRoomNumber', this.conversationId);
     });

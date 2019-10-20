@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { ToastController, Events } from '@ionic/angular';
+import { ToastController, Events, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -19,6 +19,7 @@ export class SignupPage implements OnInit {
     private router: Router,
     public toastController: ToastController,
     private events: Events,
+    public loadingController: LoadingController,
   ) {
     this.signupForm = this.formBuilder.group({
       email: ['', [
@@ -37,7 +38,13 @@ export class SignupPage implements OnInit {
   ngOnInit() {
   }
 
-  signup() {
+  async signup() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      cssClass: 'custom-loader-class',
+      showBackdrop: false,
+    });
+    await loading.present();
     const params: {
       email: string,
       password: string,
@@ -50,6 +57,7 @@ export class SignupPage implements OnInit {
         localStorage.setItem('user', JSON.stringify(res.user));
         this.events.publish('user:logged', res.user);
         this.router.navigate(['home'], { replaceUrl: true });
+        await this.loadingController.dismiss();
         const toast = await this.toastController.create({
           color: 'success',
           message: 'Login successful',
@@ -58,6 +66,7 @@ export class SignupPage implements OnInit {
         toast.present();
       },
       async err => {
+        await this.loadingController.dismiss();
         const toast = await this.toastController.create({
           color: 'danger',
           message: err.error.message,
