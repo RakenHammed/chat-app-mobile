@@ -3,14 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>conversation</ion-title>
+    <ion-title>{{receiverFullName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content #content id="content" class="ion-padding">
   <div class="message-wrap">
-
     <div *ngFor="let message of messages" class="message" [class.right]=" message.userIsSender === true">
       <div class="msg-detail">
         <div class="msg-info">

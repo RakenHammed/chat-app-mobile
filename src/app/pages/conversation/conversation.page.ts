@@ -16,6 +16,7 @@ export class ConversationPage implements OnInit, OnDestroy {
   @ViewChild('chatInput', { static: true }) messageInput: ElementRef;
   messages: Message[];
   conversationId: string;
+  receiverFullName: string;
   editorMsg;
   receiverId;
 
@@ -53,7 +54,10 @@ export class ConversationPage implements OnInit, OnDestroy {
 
   listenToSocketUpdateMessageStatusEvent() {
     this.socket.on('seen', (messageId) => {
-      this.messages.find(message => message._id === messageId).status = 'seen';
+      const message = this.messages.find(msg => msg._id === messageId);
+      if (message) {
+        message.status = 'seen';
+      }
     });
   }
 
@@ -61,6 +65,7 @@ export class ConversationPage implements OnInit, OnDestroy {
     const user = JSON.parse(localStorage.getItem('user'));
     const queryParams = this.activatedRoute.snapshot.queryParams;
     const receiver: User = JSON.parse(queryParams.receiver);
+    this.receiverFullName = receiver.firstName + ' ' + receiver.lastName;
     this.receiverId = receiver._id;
     if (user) {
       const participants: string[] = [receiver._id, user.id];
